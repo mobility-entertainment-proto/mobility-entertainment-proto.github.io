@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1b2440">
+<title>エンタメプロト一覧</title>
+<meta name="description" content="SEATouch・ACSTouch・パトログに楽しい要素を足したエンタメ試作の一覧">
+<style>
+  :root {
+    --bg: #f5f6fa;
+    --card: #ffffff;
+    --text: #1d2233;
+    --muted: #616a80;
+    --line: #e2e5ee;
+    --work: #1e4fa8;
+    --home: #e8457c;
+    --patrol: #057b7a;
+    --ink: #1b2440;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; }
+  a { color: inherit; }
+
+  /* ヒーロー */
+  .hero { background: radial-gradient(circle at 85% 20%, rgba(232,69,124,.35), transparent 40%), radial-gradient(circle at 10% 90%, rgba(5,123,122,.45), transparent 45%), var(--ink); color: #fff; padding: 40px 16px 34px; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+  .hero .wrap { padding: 0; }
+  .hero .eyebrow { font-size: 13px; letter-spacing: 2px; opacity: .75; margin: 0 0 6px; }
+  .hero h1 { font-size: clamp(26px, 5vw, 38px); margin: 0 0 8px; line-height: 1.3; }
+  .hero p.lead { margin: 0; font-size: 15px; opacity: .9; max-width: 640px; }
+  .series-intro { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 24px; }
+  .series-intro button { text-align: left; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); border-radius: 14px; padding: 14px 16px; color: #fff; font: inherit; cursor: pointer; transition: background .2s; }
+  .series-intro button:hover { background: rgba(255,255,255,.16); }
+  .series-intro b { display: flex; align-items: center; gap: 8px; font-size: 16px; }
+  .series-intro b i { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+  .series-intro span { display: block; font-size: 13px; opacity: .85; margin-top: 4px; }
+  .series-intro small { display: block; font-size: 12px; opacity: .6; margin-top: 6px; }
+
+  /* 注意 */
+  .notes { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; margin: 22px 0 8px; font-size: 13px; color: var(--muted); }
+  .notes b { color: var(--text); }
+  .notes ul { margin: 6px 0 0; padding-left: 1.2em; }
+  .notes li { margin: 2px 0; }
+
+  /* 絞り込み */
+  .filters { position: sticky; top: 0; z-index: 5; background: rgba(245,246,250,.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 12px 0; margin-bottom: 6px; }
+  .tabs { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { flex: 0 0 auto; border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 7px 14px; font: inherit; font-size: 14px; cursor: pointer; color: var(--text); display: inline-flex; align-items: center; gap: 6px; }
+  .tab i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .tab small { color: var(--muted); }
+  .tab[aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .tab[aria-pressed="true"] small { color: rgba(255,255,255,.7); }
+
+  /* シリーズ見出し */
+  .sec { margin: 26px 0 8px; }
+  .sec h2 { font-size: 20px; margin: 0; display: flex; align-items: center; gap: 10px; }
+  .sec h2 i { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
+  .sec p { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+
+  /* カード */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; transition: transform .15s, box-shadow .15s; }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(27,36,64,.1); }
+  .shot { position: relative; display: block; background: linear-gradient(160deg, color-mix(in srgb, var(--c) 18%, #fff), color-mix(in srgb, var(--c) 6%, #fff)); padding: 18px 0 0; height: 250px; overflow: hidden; text-decoration: none; }
+  .phone { width: 168px; margin: 0 auto; border-radius: 22px 22px 0 0; border: 6px solid #1b2440; border-bottom: 0; overflow: hidden; background: #fff; box-shadow: 0 10px 24px rgba(27,36,64,.2); }
+  .phone img { display: block; width: 100%; height: auto; }
+  .num { position: absolute; left: 12px; top: 12px; background: var(--c); color: #fff; font-size: 12px; font-weight: 800; border-radius: 999px; padding: 2px 10px; letter-spacing: .5px; }
+  .new { position: absolute; right: 12px; top: 12px; background: #fff; color: var(--c); font-size: 11px; font-weight: 800; border-radius: 999px; padding: 2px 8px; border: 1px solid var(--c); }
+  .body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .body h3 { margin: 0; font-size: 17px; }
+  .body .desc { margin: 0; font-size: 14px; color: var(--text); }
+  .how { font-size: 13px; color: var(--muted); background: #f6f7fb; border-radius: 10px; padding: 8px 10px; }
+  .how b { color: var(--text); font-weight: 700; margin-right: 4px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tags span { font-size: 11px; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 1px 8px; }
+  .actions { display: flex; gap: 8px; margin-top: auto; padding-top: 4px; }
+  .open { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: var(--c); color: #fff; text-decoration: none; border-radius: 10px; padding: 10px; font-weight: 700; font-size: 14px; }
+  .open:hover { filter: brightness(1.08); }
+  .qrbtn { border: 1px solid var(--line); background: #fff; border-radius: 10px; padding: 0 12px; font: inherit; font-size: 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; color: var(--text); }
+  .qr { display: none; align-items: center; gap: 12px; border-top: 1px dashed var(--line); padding-top: 10px; font-size: 12px; color: var(--muted); }
+  .qr.show { display: flex; }
+  .qr .code { width: 96px; height: 96px; flex: 0 0 96px; }
+  .qr .code svg { width: 100%; height: 100%; display: block; }
+  .qr code { font-size: 11px; word-break: break-all; color: var(--text); }
+
+  footer { margin-top: 40px; padding: 24px 16px 40px; text-align: center; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); }
+  .empty { color: var(--muted); padding: 30px 0; text-align: center; }
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: 1fr; }
+    .shot { height: 230px; }
+  }
+</style>
+</head>
+<body>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">ENTERTAINMENT PROTOTYPES</p>
+      <h1>タッチを、ちょっと楽しく。</h1>
+      <p class="lead">在席登録・推し活・巡回記録の「タッチ」に、楽しさやねぎらいを足したエンタメ試作の一覧です。スマホで開いて、そのまま触ってみてください。</p>
+      <div class="series-intro" id="seriesIntro"></div>
+    </div>
+  </section>
+
+  <main class="wrap">
+    <div class="notes">
+      <b>試すときのご注意</b>
+      <ul>
+        <li>すべて<b>試作（プロトタイプ）</b>です。実際の在席登録や巡回記録は行われません。</li>
+        <li>タッチ回数・メダル・コレクションなどは<b>見ている人のブラウザの中だけ</b>に保存されます。ほかの人と合算されることはありません（ブラウザのデータを消すとリセットされます）。</li>
+        <li>チームメンバー・運行情報・アイドルなどは<b>架空のデータやキャラクター</b>です。天気は Open-Meteo の実データを使っています。</li>
+        <li>多くのプロトに、記録をまとめて増やせる<b>「デモ」用のボタン</b>があります。節目の演出を見たいときに使ってください。</li>
+      </ul>
+    </div>
+
+    <div class="filters"><div class="tabs" id="tabs" role="group" aria-label="シリーズで絞り込み"></div></div>
+    <div id="list"></div>
+  </main>
+
+  <footer>最終更新 2026年10月20日 ・ mobility-entertainment-proto</footer>
+
+<script src="lib/qrcode.min.js"></script>
+<script>
+  const BASE = 'https://mobility-entertainment-proto.github.io/';
+  const SERIES = [
+    { id: 'work',   name: 'SEATouch',  sub: 'work-entertainment',   color: 'var(--work)',   hex: '#1e4fa8', desc: 'オフィスの在席・退席登録に、楽しさをプラス', detail: '在席登録・退席登録のたびに、おみくじやコレクション、天気などが出ます。' },
+    { id: 'home',   name: 'ACSTouch',  sub: 'home-entertainment',   color: 'var(--home)',   hex: '#e8457c', desc: 'アイドルのアクスタにタッチして、家で楽しむ', detail: 'アクリルスタンドに埋め込んだ NFC にスマホでタッチすると、コンテンツが再生されます。' },
+    { id: 'patrol', name: 'パトログ',  sub: 'patrol-entertainment', color: 'var(--patrol)', hex: '#057b7a', desc: '巡回記録に、ねぎらいとやりがいをプラス', detail: '巡回場所の IC カードにタッチして記録するたびに、ねぎらいの言葉やメダル、旅や冒険が進みます。' },
+  ];
+  // how = 試し方
+  const PROTOS = [
+    { s: 'work', n: 1,  title: '在席退席登録（ベース）', desc: 'SEATouch の画面を再現した土台。在席登録を押すと完了画面に移ります。', how: '在席登録を押す', tags: ['ベース'] },
+    { s: 'work', n: 2,  title: '今日のおみくじ', desc: '在席登録すると、今日の運勢と仕事運・会議運・ランチ運が出ます。', how: '在席登録を押す', tags: ['おみくじ', 'ランダム'] },
+    { s: 'work', n: 3,  title: '社員食堂ガラポン', desc: 'ガラポンを回して、社員食堂の割引券（QRコード付き）が当たります。1等は500円引き。', how: '在席登録 → ガラポンを回す', tags: ['抽選', 'QRコード', '紙吹雪'] },
+    { s: 'work', n: 4,  title: 'アーティストカード', desc: 'カードパックを開けると、6組のアーティストカードが1枚当たります。未入手のカードはぼかし表示。', how: '在席登録 → パックをタップ → コレクション', tags: ['ガチャ', 'コレクション', 'キラカード'] },
+    { s: 'work', n: 5,  title: 'タッチ数メダル', desc: '今月のタッチ数が5・10・20回でメダル獲得。月ごとのメダルコレクション付き。', how: '在席登録 / コレクションの「+4タッチ（デモ）」', tags: ['メダル', 'バロメーター'] },
+    { s: 'work', n: 6,  title: 'アーティストメダル', desc: '月替わりのアーティストがメダルの絵柄に。メダルはさわると揺れます。', how: 'メダルコレクション → メダルをタップしてドラッグ', tags: ['メダル', 'さわって遊ぶ'] },
+    { s: 'work', n: 7,  title: 'チームメダル', desc: 'チームの今月のタッチ数でメダル獲得。メンバー別のタッチ数も並びます。', how: '在席登録を押す', tags: ['チーム', 'メダル'] },
+    { s: 'work', n: 8,  title: '退席時の運行情報', desc: '退席すると、帰りに使う路線の運行情報を表示します（架空データ）。', how: '退席登録 / 帰りの路線を設定', tags: ['交通', 'デモデータ'] },
+    { s: 'work', n: 9,  title: '外の天気', desc: '在席・退席時に外の天気と、傘・服装のアドバイス。天気は実データです。', how: '在席登録・退席登録を押す', tags: ['天気', '実データ'] },
+    { s: 'work', n: 10, title: '育てる観葉植物', desc: '在席登録が水やりに。8段階に育ち、放っておくとしおれ、退席時は眠ります。', how: '在席登録 / 植物をタップ', tags: ['育成', 'キャラクター'] },
+    { s: 'work', n: 11, title: 'SEA水槽', desc: 'タッチのたびに魚が増え、水槽がにぎやかに。退席時は夜の生き物がやってきます。', how: '在席・退席 / 水槽をタップしてエサやり', tags: ['育成', '図鑑'] },
+    { s: 'home', n: 1,  title: 'アイドルおみくじ', desc: 'アクスタに NFC タッチすると、架空のアイドル「ひまり」が今日の運勢を占ってくれます。', how: 'NFCタッチを押す', tags: ['キャラクター', 'おみくじ'] },
+    { s: 'patrol', n: 1, title: 'ねぎらいの言葉', desc: '時間帯・天気・その日の回数に合わせて、ねぎらいの言葉が毎回変わります。', how: 'ON・OFF を押す', tags: ['ねぎらい', '天気'] },
+    { s: 'patrol', n: 2, title: '巡回メダル', desc: '7種類×3段階のメダル。累計の巡回数がバロメーターでわかります。', how: 'ON / 入力画面の「+10回の巡回（デモ）」', tags: ['メダル', 'バロメーター'] },
+    { s: 'patrol', n: 3, title: '東海道五十三次', desc: '1回の巡回で1宿すすむ旅。宿場ごとにスタンプが押され、御朱印帳にたまります。', how: 'ON / 入力画面の「+5宿すすむ（デモ）」', tags: ['旅', 'スタンプ'] },
+    { s: 'patrol', n: 4, title: '巡回スタンプカード', desc: '8か所の巡回場所でスタンプを集める、今日のスタンプカード。そろうとコンプリート。', how: '場所を選んで ON', tags: ['スタンプ', 'ライト'] },
+    { s: 'patrol', n: 5, title: '巡回ダンジョン', desc: 'RPG 風。1回の巡回でダンジョンを1階すすみ、モンスターやボスを倒してレベルアップ。', how: 'ON / 入力画面の「+5かい すすむ（デモ）」', tags: ['RPG', 'レベル'] },
+    { s: 'patrol', n: 6, title: '巡回クエスト', desc: '警備の現場版 RPG。照明の消し忘れや施錠もれなどの「気づき」に対応して称号アップ。', how: 'ON / 入力画面の「+5エリア すすむ（デモ）」', tags: ['RPG', '警備の現場'] },
+  ];
+  const $ = (id) => document.getElementById(id);
+  const slug = (p) => `${SERIES.find(s => s.id === p.s).sub}-proto-${p.n}`;
+  const url = (p) => `${BASE}${slug(p)}/`;
+
+  $('seriesIntro').innerHTML = SERIES.map(s => `<button data-filter="${s.id}"><b><i style="background:${s.hex}"></i>${s.name}</b><span>${s.desc}</span><small>${PROTOS.filter(p => p.s === s.id).length} 個のプロト ›</small></button>`).join('');
+  const TABS = [{ id: 'all', name: 'すべて', count: PROTOS.length }, ...SERIES.map(s => ({ id: s.id, name: s.name, hex: s.hex, count: PROTOS.filter(p => p.s === s.id).length }))];
+  let filter = 'all';
+  try { filter = new URLSearchParams(location.search).get('s') || 'all'; } catch {}
+  if (!TABS.some(t => t.id === filter)) filter = 'all';
+
+  function render() {
+    $('tabs').innerHTML = TABS.map(t => `<button class="tab" data-filter="${t.id}" aria-pressed="${t.id === filter}">${t.hex ? `<i style="background:${t.hex}"></i>` : ''}${t.name} <small>${t.count}</small></button>`).join('');
+    const shown = SERIES.filter(s => filter === 'all' || s.id === filter);
+    $('list').innerHTML = shown.map(s => `
+      <section class="sec-block" style="--c:${s.color}">
+        <div class="sec"><h2><i style="background:${s.hex}"></i>${s.name}</h2><p>${s.detail}</p></div>
+        <div class="grid">${PROTOS.filter(p => p.s === s.id).map(card).join('')}</div>
+      </section>`).join('');
+  }
+  function card(p) {
+    const id = slug(p);
+    return `<article class="card">
+      <a class="shot" href="${url(p)}" target="_blank" rel="noopener" aria-label="${p.title}を開く">
+        <span class="num">${p.s}-${p.n}</span>
+        <div class="phone"><img src="thumbs/${id}.jpg" alt="${p.title}の画面" loading="lazy" width="360" height="619"></div>
+      </a>
+      <div class="body">
+        <h3>${p.title}</h3>
+        <p class="desc">${p.desc}</p>
+        <div class="how"><b>試し方</b>${p.how}</div>
+        <div class="tags">${p.tags.map(t => `<span>${t}</span>`).join('')}</div>
+        <div class="actions">
+          <a class="open" href="${url(p)}" target="_blank" rel="noopener">開く <span aria-hidden="true">↗</span></a>
+          <button class="qrbtn" data-qr="${id}" aria-expanded="false">QR</button>
+        </div>
+        <div class="qr" id="qr-${id}"><div class="code"></div><div>スマホで読み取って開けます<br><code>${url(p)}</code></div></div>
+      </div>
+    </article>`;
+  }
+
+  document.addEventListener('click', (e) => {
+    const f = e.target.closest('[data-filter]');
+    if (f) {
+      filter = f.dataset.filter;
+      try { history.replaceState(null, '', filter === 'all' ? location.pathname : `?s=${filter}`); } catch {}
+      render();
+      if (f.closest('#seriesIntro')) document.querySelector('.filters').scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    const q = e.target.closest('[data-qr]');
+    if (q) {
+      const box = $(`qr-${q.dataset.qr}`), open = !box.classList.contains('show');
+      if (open && !box.querySelector('svg')) {
+        const qr = qrcode(0, 'M');
+        qr.addData(`${BASE}${q.dataset.qr}/`);
+        qr.make();
+        box.querySelector('.code').innerHTML = qr.createSvgTag({ cellSize: 3, margin: 2, scalable: true });
+      }
+      box.classList.toggle('show', open);
+      q.setAttribute('aria-expanded', open);
+    }
+  });
+  render();
+</script>
+</body>
+</html>
