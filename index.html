@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#1b2440">
 <title>エンタメプロト一覧</title>
-<meta name="description" content="SEATouch・ACSTouch・パトログに楽しい要素を足したエンタメ試作の一覧">
+<meta name="description" content="SEATouch・パトログに楽しい要素を足したエンタメ試作の一覧">
 <style>
   :root {
     --bg: #f5f6fa;
@@ -14,7 +14,6 @@
     --muted: #616a80;
     --line: #e2e5ee;
     --work: #1e4fa8;
-    --home: #e8457c;
     --patrol: #057b7a;
     --ink: #1b2440;
   }
@@ -99,7 +98,7 @@
     <div class="wrap">
       <p class="eyebrow">ENTERTAINMENT PROTOTYPES</p>
       <h1>タッチを、ちょっと楽しく。</h1>
-      <p class="lead">在席登録・推し活・巡回記録の「タッチ」に、楽しさやねぎらいを足したエンタメ試作の一覧です。スマホで開いて、そのまま触ってみてください。</p>
+      <p class="lead">在席登録や巡回記録の「タッチ」に、楽しさやねぎらいを足したエンタメ試作の一覧です。スマホで開いて、そのまま触ってみてください。</p>
       <div class="series-intro" id="seriesIntro"></div>
     </div>
   </section>
@@ -110,7 +109,7 @@
       <ul>
         <li>すべて<b>試作（プロトタイプ）</b>です。実際の在席登録や巡回記録は行われません。</li>
         <li>タッチ回数・メダル・コレクションなどは<b>見ている人のブラウザの中だけ</b>に保存されます。ほかの人と合算されることはありません（ブラウザのデータを消すとリセットされます）。</li>
-        <li>チームメンバー・運行情報・アイドルなどは<b>架空のデータやキャラクター</b>です。天気は Open-Meteo の実データを使っています。</li>
+        <li>チームメンバー・運行情報などは<b>架空のデータやキャラクター</b>です。天気は Open-Meteo の実データを使っています。</li>
         <li>多くのプロトに、記録をまとめて増やせる<b>「デモ」用のボタン</b>があります。節目の演出を見たいときに使ってください。</li>
       </ul>
     </div>
@@ -126,7 +125,6 @@
   const BASE = 'https://mobility-entertainment-proto.github.io/';
   const SERIES = [
     { id: 'work',   name: 'SEATouch',  sub: 'work-entertainment',   color: 'var(--work)',   hex: '#1e4fa8', desc: 'オフィスの在席・退席登録に、楽しさをプラス', detail: '在席登録・退席登録のたびに、おみくじやコレクション、天気などが出ます。' },
-    { id: 'home',   name: 'ACSTouch',  sub: 'home-entertainment',   color: 'var(--home)',   hex: '#e8457c', desc: 'アイドルのアクスタにタッチして、家で楽しむ', detail: 'アクリルスタンドに埋め込んだ NFC にスマホでタッチすると、コンテンツが再生されます。' },
     { id: 'patrol', name: 'パトログ',  sub: 'patrol-entertainment', color: 'var(--patrol)', hex: '#057b7a', desc: '巡回記録に、ねぎらいとやりがいをプラス', detail: '巡回場所の IC カードにタッチして記録するたびに、ねぎらいの言葉やメダル、旅や冒険が進みます。' },
   ];
   // how = 試し方
@@ -142,7 +140,6 @@
     { s: 'work', n: 9,  title: '外の天気', desc: '在席・退席時に外の天気と、傘・服装のアドバイス。天気は実データです。', how: '在席登録・退席登録を押す', tags: ['天気', '実データ'] },
     { s: 'work', n: 10, title: '育てる観葉植物', desc: '在席登録が水やりに。8段階に育ち、放っておくとしおれ、退席時は眠ります。', how: '在席登録 / 植物をタップ', tags: ['育成', 'キャラクター'] },
     { s: 'work', n: 11, title: 'SEA水槽', desc: 'タッチのたびに魚が増え、水槽がにぎやかに。退席時は夜の生き物がやってきます。', how: '在席・退席 / 水槽をタップしてエサやり', tags: ['育成', '図鑑'] },
-    { s: 'home', n: 1,  title: 'アイドルおみくじ', desc: 'アクスタに NFC タッチすると、架空のアイドル「ひまり」が今日の運勢を占ってくれます。', how: 'NFCタッチを押す', tags: ['キャラクター', 'おみくじ'] },
     { s: 'patrol', n: 1, title: 'ねぎらいの言葉', desc: '時間帯・天気・その日の回数に合わせて、ねぎらいの言葉が毎回変わります。', how: 'ON・OFF を押す', tags: ['ねぎらい', '天気'] },
     { s: 'patrol', n: 2, title: '巡回メダル', desc: '7種類×3段階のメダル。累計の巡回数がバロメーターでわかります。', how: 'ON / 入力画面の「+10回の巡回（デモ）」', tags: ['メダル', 'バロメーター'] },
     { s: 'patrol', n: 3, title: '東海道五十三次', desc: '1回の巡回で1宿すすむ旅。宿場ごとにスタンプが押され、御朱印帳にたまります。', how: 'ON / 入力画面の「+5宿すすむ（デモ）」', tags: ['旅', 'スタンプ'] },
