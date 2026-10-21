@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#1b2440">
 <title>エンタメプロト一覧</title>
-<meta name="description" content="SEATouch・パトログに楽しい要素を足したエンタメ試作の一覧">
+<meta name="description" content="SEAT・PATOに楽しい要素を足したエンタメ試作の一覧">
 <style>
   :root {
     --bg: #f5f6fa;
@@ -124,12 +124,12 @@
 <script>
   const BASE = 'https://mobility-entertainment-proto.github.io/';
   const SERIES = [
-    { id: 'work',   name: 'SEATouch',  sub: 'work-entertainment',   color: 'var(--work)',   hex: '#1e4fa8', desc: 'オフィスの在席・退席登録に、楽しさをプラス', detail: '在席登録・退席登録のたびに、おみくじやコレクション、天気などが出ます。' },
-    { id: 'patrol', name: 'パトログ',  sub: 'patrol-entertainment', color: 'var(--patrol)', hex: '#057b7a', desc: '巡回記録に、ねぎらいとやりがいをプラス', detail: '巡回場所の IC カードにタッチして記録するたびに、ねぎらいの言葉やメダル、旅や冒険が進みます。' },
+    { id: 'work',   name: 'SEAT',  sub: 'work-entertainment',   color: 'var(--work)',   hex: '#1e4fa8', desc: 'オフィスの在席・退席登録に、楽しさをプラス', detail: '在席登録・退席登録のたびに、おみくじやコレクション、天気などが出ます。' },
+    { id: 'patrol', name: 'PATO',  sub: 'patrol-entertainment', color: 'var(--patrol)', hex: '#057b7a', desc: '巡回記録に、ねぎらいとやりがいをプラス', detail: '巡回場所の IC カードにタッチして記録するたびに、ねぎらいの言葉やメダル、旅や冒険が進みます。' },
   ];
   // how = 試し方
   const PROTOS = [
-    { s: 'work', n: 1,  title: '在席退席登録（ベース）', desc: 'SEATouch の画面を再現した土台。在席登録を押すと完了画面に移ります。', how: '在席登録を押す', tags: ['ベース'] },
+    { s: 'work', n: 1,  title: '在席退席登録（ベース）', desc: 'SEAT の画面を再現した土台。在席登録を押すと完了画面に移ります。', how: '在席登録を押す', tags: ['ベース'] },
     { s: 'work', n: 2,  title: '今日のおみくじ', desc: '在席登録すると、今日の運勢と仕事運・会議運・ランチ運が出ます。', how: '在席登録を押す', tags: ['おみくじ', 'ランダム'] },
     { s: 'work', n: 3,  title: '社員食堂ガラポン', desc: 'ガラポンを回して、社員食堂の割引券（QRコード付き）が当たります。1等は500円引き。', how: '在席登録 → ガラポンを回す', tags: ['抽選', 'QRコード', '紙吹雪'] },
     { s: 'work', n: 4,  title: 'アーティストカード', desc: 'カードパックを開けると、6組のアーティストカードが1枚当たります。未入手のカードはぼかし表示。', how: '在席登録 → パックをタップ → コレクション', tags: ['ガチャ', 'コレクション', 'キラカード'] },
